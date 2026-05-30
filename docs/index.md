@@ -20,6 +20,7 @@ precisa.
 - [`auditoria-az.md`](auditoria-az.md) — Auditoria A-Z (ciclos, compradores, fornecedores, conferências, consulta cross-ciclo, produtos não encontrados)
 - [`impressao.md`](impressao.md) — Impressão de etiquetas térmicas (ZPL, Argox/Zebra/Elgin, editor visual, aba Direta, mobile)
 - [`mobile-android.md`](mobile-android.md) — APK Android via Capacitor (build, ML Kit barcode, DataWedge, updates)
+- [`app-versionamento.md`](app-versionamento.md) — Versionamento + atualização OTA do app (version.json, check-update, force-update, dashboard de frota, release)
 
 ## Segurança & operação
 

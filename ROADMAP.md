@@ -207,6 +207,18 @@ Módulo novo pra impressão de etiquetas térmicas (ARGOX / ZEBRA / ELGIN).
 - ⏳ Impressão de etiquetas de áreas (QR/barcode)
 - ⏳ Produtividade em tempo real (itens/h por operador)
 
+## 0.5.x — App: Versionamento & Atualização OTA ✅
+
+- ✅ Fonte única de versão (`version.json`) → gradle + vite + backend (`app_versoes`, migration `d4a1b8e93c27`)
+- ✅ `/device/check-update` + banner no app (opcional/obrigatória) + **Atualizar agora**
+- ✅ Híbrido: bundle JS silencioso (capgo) + APK via instalador; LAN + fallback GitHub Release; valida SHA-256
+- ✅ Update obrigatório **bloqueia login** (426) até atualizar
+- ✅ Dashboard de frota: cobertura por versão/filial + tempo/quantidade de uso por equipamento
+- ✅ Aba Versões: force-update + rollback (retirar versão)
+- ✅ Desvínculo do dispositivo restrito ao admin (operador só troca de operador)
+- ✅ Scripts: bump_version / release_app (build assinado + sha256 + notas) / gerar_keystore
+- ⏳ Instalar `@capgo/capacitor-updater` no mobile/ + 1º APK assinado de release (na máquina de build)
+
 ## 0.5.0 — Segurança, Acesso & refinos ✅
 
 ### Conta de sistema & blindagem de acesso ✅
