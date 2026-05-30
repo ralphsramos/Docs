@@ -13,8 +13,12 @@ perfis_           codigos_           inventario_operadores    app_config
 usuarios_perfis                      leituras                 coletas_arquivadas ★
                                                               coletas_arquivadas_payload ★
                                                               export_templates ★
-                                                              ★ = nova em 0.3.0
+app_versoes ☆                                                 ★ = nova em 0.3.0
+                                                              ☆ = versionamento/OTA do app
 ```
+
+> Tabelas posteriores à 0.3.0 (impressão, auditoria A-Z, inventário etc.) seguem
+> o mesmo padrão; abaixo documentamos as ligadas a **acesso & app**.
 
 ## Identidade & Acesso
 
@@ -124,6 +128,35 @@ Expandido na 0.3.0 com telemetria + sessão de operador.
 | **total_leituras** | int | **0.3.0** — contador acumulado |
 | **operador_login_atual** | varchar(50) | **0.3.0** — operador logado no app (sessão preservada até logout) |
 | **operador_login_em** | timestamptz | **0.3.0** |
+| **version_code_instalado** | int | **OTA** — `version_code` (inteiro) instalado agora; base do "tem update?" |
+| **ultimo_check_update** | timestamptz | **OTA** — último `/device/check-update` |
+| **tempo_uso_segundos** | bigint | **OTA** — uso acumulado (soma das sessões login→logout) |
+| **total_sessoes** | int | **OTA** — nº de logins de operador (telemetria de uso) |
+
+### `app_versoes` — **NOVO (versionamento/OTA do app)**
+Catálogo das versões publicadas do app mobile (migration `d4a1b8e93c27`). O
+binário **não** fica no banco — vive em `app_releases/` (local) + GitHub Release;
+a tabela guarda só os metadados + hash + url pública.
+
+| Campo | Tipo | Notas |
+|-------|------|-------|
+| id | bigserial PK | |
+| **version_code** | int | inteiro **monotônico** — fonte da verdade do "tem update?" |
+| version_name | varchar(40) | rótulo amigável (ex.: `0.5.0`) |
+| tipo | varchar(10) | `apk` (completo) ou `bundle` (só JS, atualização silenciosa) |
+| canal | varchar(10) | `stable` / `beta` (rollout gradual futuro) |
+| **obrigatoria** | bool | force-update — bloqueia login até atualizar |
+| **ativa** | bool | distribuível? `false` = retirada (rollback / versão com problema) |
+| notas | text | changelog da versão (markdown) |
+| arquivo_nome | varchar(120) | nome do binário em `app_releases/` (ex.: `coletor2001-5.apk`) |
+| sha256 | varchar(64) | hash do binário — o app valida o download antes de aplicar |
+| tamanho_bytes | bigint | |
+| url_publica | varchar(255) | asset do GitHub Release (fallback fora da LAN) |
+| publicado_por | varchar(50) | login do admin que registrou |
+| created_at / updated_at | timestamptz | |
+
+> Unique `(version_code, tipo)`. A comparação de versão é **sempre** por
+> `version_code` — nunca por `version_name` (string).
 
 ### `dispositivo_logs` — **NOVO 0.3.0**
 Auditoria append-only de eventos do dispositivo (migration `f1b8d9a2c4e5`).
@@ -138,8 +171,8 @@ Auditoria append-only de eventos do dispositivo (migration `f1b8d9a2c4e5`).
 | operador_login | varchar(50) | quem disparou (operador logado ou admin) |
 | ip | varchar(45) | |
 
-**10 tipos de evento padronizados:**
-`pareamento`, `sync`, `logout`, `login_operador`, `login_operador_falhou`, `logout_operador`, `leituras_batch`, `arquivar_coleta`, `token_rotacionado`, `ativacao`.
+**Tipos de evento padronizados:**
+`pareamento`, `sync`, `logout`, `login_operador`, `login_operador_falhou`, `logout_operador`, `leituras_batch`, `arquivar_coleta`, `token_rotacionado`, `ativacao`, **`check_update`** (OTA — app perguntou se há versão nova), **`update_aplicado`** (OTA — app aplicou versão nova).
 
 ### `produtos`
 | Campo | Tipo | Notas |
@@ -462,3 +495,4 @@ Em `backend/alembic/versions/`. Ordem cronológica:
 > **acesso & segurança**:
 > - `b2e8d4c1f7a9_conta_de_sistema_systems` — `usuarios.senha_hash` + `usuarios.protegido` + `perfis.sistema` (suporte à conta de sistema imutável; o usuário/perfil em si são criados pelo seed de startup, não pela migration)
 > - `c3f1a9d24e8b_perms_acesso_modulos` — permissões de acesso `conferencias.ver` / `separacoes.ver` / `produtos.ver` (concedidas ao perfil admin; o perfil de sistema recebe no próximo boot)
+> - `d4a1b8e93c27_app_versoes_e_telemetria_uso` — tabela `app_versoes` (versionamento/OTA) + `dispositivos.version_code_instalado/ultimo_check_update/tempo_uso_segundos/total_sessoes`
