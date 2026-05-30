@@ -163,6 +163,14 @@ O Winthor não usa preço único — tem **camadas com prioridade**:
 
 > **Atenção:** em `PCPRODUT.PRECOFIXO` é VARCHAR2(1) (flag 'S'/'N') indicando se o produto USA preço fixo. Em `PCPRECOPROM.PRECOFIXO` é NUMBER com o VALOR. Nomes iguais, semânticas diferentes.
 
+> **`CODPLPAGMAX` distingue promoção a prazo × à vista** (confirmado em produção):
+> um mesmo produto/região costuma ter **2 linhas** vigentes em `PCPRECOPROM`:
+> uma com `CODPLPAGMAX` **nulo** = promoção "a prazo"/normal, e outra com
+> `CODPLPAGMAX = 1` = desconto **à vista** (dinheiro/PIX, normalmente menor).
+> O módulo de Impressão sincroniza as duas separadas (`preco_promocional` e
+> `preco_avista`) pra a etiqueta poder sair como PROMOÇÃO ou À VISTA.
+> Pegar só `MIN(PRECOFIXO)` mistura as duas e perde uma das ofertas.
+
 #### `PCPRECO` (~6,1 milhões de linhas) — histórico de alterações
 Por (`CODPROD`, `CODFILIAL`, `NUMREGIAO`). Útil pra ofertas com `DTOFERTAINI`/`DTOFERTAFIM` (ativa entre essas datas).
 

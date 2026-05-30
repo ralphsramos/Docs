@@ -6,6 +6,8 @@ cadastro de hardware → desenho de layouts → impressão (web + mobile) →
 auditoria.
 
 > Status: **Backend ✓ · Admin web ✓ · Mobile ✓ · Worker fila ✓**
+> Layout de preço com 3 modos (NORMAL/PROMOÇÃO/À VISTA), editor visual com
+> cores/tarja/camadas e código de barras responsivo. ✓
 > Pendente: integrações com Coleta Avulsa / Inventário (IMP-4).
 
 ---
@@ -32,7 +34,9 @@ impressao_jobs          — auditoria de cada impressão (produtos JSON + status
 impressao_jobs_log      — eventos por job (criado→render_ok→tcp_conectado→enviado→sucesso/falha)
 ```
 
-Migrations: `c5b8f3a7e2d9` (foundational) + `d4e6a2c8f1b7` (permissões granulares).
+Migrations: `c5b8f3a7e2d9` (foundational) + `d4e6a2c8f1b7` (permissões granulares)
++ `f9a2b6c3e801` (estoques_filial preço DE/POR) + `c7e1a9d4f602` (preço
+promocional + à vista separados por plano de pagamento).
 
 ## 3. Permissões (granulares por aba)
 
@@ -50,13 +54,84 @@ Migrations: `c5b8f3a7e2d9` (foundational) + `d4e6a2c8f1b7` (permissões granular
 Defesa em profundidade: frontend esconde abas sem permissão, backend valida
 cada endpoint com `require_any_permission(...)`.
 
-## 4. As 5 abas do `/impressao`
+## 4. As 6 abas do `/impressao`
 
 ### ⚡ Direta
 Bipa código → preview Labelary com dados reais → IMPRIMIR. Engrenagem ⚙ pra
 escolher impressora/layout/filial (salva em localStorage por usuário).
+Impressora, layout **e filial** são auto-selecionados (sem filial não há preço).
+O painel mostra os **3 preços** (Tabela, Promoção, À Vista) e dois botões
+**PROMOÇÃO / À VISTA** pra escolher qual sai na etiqueta — o preview e a
+impressão refletem a escolha. Quando o produto não tem desconto, sai o layout
+NORMAL (preço único). A tag **⚡ Impressão Direta** (ao lado de Cópias), quando
+marcada, imprime na hora ao bipar (ENTER) sem clicar IMPRIMIR — fluxo de balcão.
 
-### 📋 Coletas
+### 📋 Lista de produtos
+Impressão em **lote** a partir do catálogo, espelhando a tela "Filtrar Produtos"
+da rotina Winthor de emissão de etiquetas de preço (RTM 2012): escolhe a filial →
+define os filtros → **🔍 Buscar** → marca os produtos (com nº de cópias por item,
+ou "marcar todos da página") → configura impressora/layout/preço no **ícone ⚙**
+do rodapé → **🖨 Imprime os selecionados** de uma vez. Cada linha mostra os 3
+preços, fornecedor/departamento e as datas de **alteração de preço** e
+**fim da promoção**.
+
+> **Configuração de impressão**: no rodapé, o botão **⚙** mostra um resumo da
+> config atual (impressora · layout · preço) e abre um modal pra trocar
+> impressora, layout e modo de preço. A borda fica vermelha enquanto faltar
+> impressora ou layout.
+
+> **Carga sob demanda**: a lista só é carregada **após clicar em Buscar** (ou
+> aplicar um chip/filtro) — não despeja o catálogo inteiro ao abrir a aba nem ao
+> trocar de filial.
+
+Filtros na própria página:
+- **Busca** por código, EAN ou descrição.
+- **Situação** (chips): todos · só com estoque · só em promoção · só com à vista.
+- **⚙ Filtros** — abre o modal de filtros avançados (abaixo); a engrenagem mostra
+  um badge com a quantidade de filtros ativos.
+- **🧾 Lista por código** — abre um modal pra colar uma lista de **códigos
+  internos e/ou códigos de barras** (um por linha ou separados por vírgula/espaço).
+  Resolve via `POST /resolver-codigos` (casa por CODPROD e, se não achar, por EAN
+  principal ou de embalagem), mostra encontrados/não-encontrados e entra no
+  **modo lista**.
+- **Por NF de entrada** — informa o nº da NF e traz todos os itens recebidos
+  naquela nota (consulta o Winthor ao vivo via `/nf-entrada`), entrando no
+  **modo lista**, pra etiquetar a mercadoria recém-chegada.
+
+> **Modo lista**: ao usar "Lista por código" ou "NF de entrada", o grid passa a
+> mostrar **só os produtos informados** (não o catálogo inteiro) — já marcados
+> pra impressão. Um badge "📋 Lista por código/NF" aparece no cabeçalho, com um
+> botão "✕ Sair da lista" pra voltar ao catálogo. No backend é o parâmetro
+> `codigos` (`IN`) do `/produtos-lista`. Buscar / trocar chip / aplicar um filtro
+> avançado saem do modo lista.
+
+Modal **⚙ Filtros (rotina 2012)** — paridade com a tela F5-Filtro do WinThor:
+- **Classificação**: Fornecedor, Comprador, Departamento, Seção, **Exceto seção**
+  e Marca — cada um é um **combobox com busca (por código ou nome) e múltipla
+  seleção** (checkbox); as opções vêm de `/opcoes-filtro`. No backend cada filtro
+  é um `IN (...)`, e o **Exceto seção** é um `NOT IN` (`excluir_secao`) que remove
+  do grid os produtos das seções escolhidas.
+- **Tipo & Estoque**: tipo de produto (em linha / fora de linha, via
+  `PCPRODUT.DTEXCLUSAO`), estoque (>0 / =0 / <0) e "somente produto principal".
+- **Períodos** (início → fim): alteração de preço (`PCTABPR.DTULTATUPVENDA`),
+  promoção (`PCPRECOPROM.DTINICIOVIGENCIA`/`DTFIMVIGENCIA`) e última entrada
+  (`PCEST.DTULTENT`).
+
+As colunas da tabela mostram, além dos 3 preços, o fornecedor/departamento de
+cada linha e as datas de **alteração de preço** e **fim da promoção**.
+
+**Cores por preço**: cada preço tem sua cor (cabeçalho + valor) — **Tabela** azul,
+**Promoção** laranja, **À vista** verde; as datas de promoção (início/fim) saem
+em laranja, casando com a coluna Promoção.
+
+**Grid ordenável (tipo Excel)**: clique no cabeçalho de qualquer coluna (Código,
+Descrição, EAN, Estoque, Tabela, Promoção, À vista, Alterado, Promo início, Promo
+fim) pra ordenar; clique de novo pra inverter (▲/▼). A ordenação é feita no
+servidor (`ordenar_por`/`ordem`) com vazios sempre no fim e desempate por código.
+A **impressão segue a ordem da grid** — os selecionados saem na sequência exibida,
+não na ordem em que foram marcados (selecionados fora da página atual vão ao fim).
+
+### 🗂️ Coletas
 Grid de jobs com drawer lateral (payload, ZPL renderizado, log de eventos,
 botão reimprimir). Filtros: filial, usuário, status, layout, impressora.
 
@@ -64,7 +139,24 @@ botão reimprimir). Filtros: filial, usuário, status, layout, impressora.
 CRUD com **editor visual react-konva**: canvas em mm, paleta de campos
 Winthor arrastáveis (descrição, preço DE/POR, EAN, código), propriedades à
 direita, **preview Labelary ao lado com debounce 500ms**. Aba secundária 💻 ZPL
-pra editar o template bruto. Importar via upload `.zpl` (IMP-4).
+pra editar o template bruto. **Duplicar layout** (clona pra criar variações).
+
+Recursos do editor visual:
+- **Tipografia**: fonte ZPL, tamanho, alinhamento, rotação, negrito, quebra de
+  linha (wordwrap) com espaçamento.
+- **Cores (P&B na térmica)**: cor do texto + cor de fundo (texto/campo) e cor
+  de linha + cor de fundo (caixa). Como a impressora é monocromática, fundo
+  escuro vira **tarja preta** (`^GB` sólido) com texto branco (`^FR`); cores
+  claras saem como preto/branco. A cor aparece no canvas; o preview Labelary
+  mostra como sai impresso.
+- **Camadas (z-order)**: botões ⤓ Fundo / ↓ Recuar / ↑ Avançar / ⤒ Frente no
+  painel de Propriedades definem quem fica na frente/atrás. A ordem é salva no
+  template e respeitada na impressão direta.
+- **Código de barras responsivo**: gerado como imagem (`^GF`) no tamanho exato
+  da caixa — preenche a largura/altura sem os saltos do `^BC` nativo.
+- **Imagem/logo + plano de fundo**: upload PNG/JPG convertido pra `^GF`.
+- **Produto de teste**: campo pra bipar um produto real (cód/EAN) + filial +
+  modo (auto/promoção/à vista) e ver o preview com dados reais em vez do mock.
 
 ### 🖨️ Impressoras
 CRUD de hardware. Cada card mostra bolinha verde (online ≤ 5min) ou cinza.
@@ -166,11 +258,39 @@ Após o render Jinja com dados reais:
 ^FO20,90^BCN,50,Y,N,N^FD12345^FS
 ```
 
-## 10. Pontos abertos (IMP-4)
+## 10. Layout de preço "Preço Universal" (3 modos)
+
+Layout único (seed `scripts/seed_layout_preco.py`, 70×30mm) que detecta o modo
+visual pelos dados do produto, espelhando o RTM Winthor de etiqueta de preço:
+
+| Modo | Quando | Mostra |
+|---|---|---|
+| **NORMAL**    | sem desconto (POR = tabela)        | preço único + EMISSÃO |
+| **PROMOÇÃO**  | preço promocional < tabela         | DE/POR + **ECONOMIZE** + VÁLIDO |
+| **À VISTA**   | preço à vista < tabela (escolhido) | DE/POR + tarja preta **"À VISTA (DINHEIRO OU PIX)"** + VÁLIDO |
+
+Condições por elemento (`condicao`): `sempre`, `desconto` (promo **ou** à vista
+— cobre DE/POR/VÁLIDO), `promo` (só ECONOMIZE), `avista` (só a tarja), `normal`.
+Promoção e à vista são **mutuamente exclusivas** (`em_promocao` XOR `tem_avista`)
+e só ligam quando há **desconto real** (preço escolhido < tabela).
+
+Origem dos 3 preços no Winthor (sincronizados em `estoques_filial`):
+
+| Campo | Origem | Observação |
+|---|---|---|
+| `preco_de` (tabela)   | `PCTABPR.PTABELA`                          | preço cheio da região |
+| `preco_promocional`   | `PCPRECOPROM.PRECOFIXO` com `CODPLPAGMAX` nulo | promoção "a prazo" |
+| `preco_avista`        | `PCPRECOPROM.PRECOFIXO` com `CODPLPAGMAX = 1`  | desconto à vista / PIX |
+
+A query separa as duas promoções por plano de pagamento e filtra a região
+(antes pegava `MIN(PRECOFIXO)` e perdia uma das ofertas).
+
+## 11. Pontos abertos (IMP-4)
 
 - Botão "🖨️ Imprimir etiquetas" dentro da Coleta Avulsa / Inventário (modal
   pra escolher layout + impressora + cópias e dispara batch)
 - Descoberta de impressoras na rede (mDNS via `zeroconf` + scan TCP da
   subnet) — botão "🔍 Procurar" na aba Impressoras
 - Importar ZPL via upload `.zpl`/`.prn` no editor de layouts
-- Duplicar layout
+- Sincronizar a vigência da promoção (`PCPRECOPROM.DTFIMVIGENCIA`) pro campo
+  VÁLIDO mostrar a data real de fim (hoje cai pra data de emissão)

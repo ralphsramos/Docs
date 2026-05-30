@@ -151,7 +151,14 @@ Módulo novo pra impressão de etiquetas térmicas (ARGOX / ZEBRA / ELGIN).
 - ✅ **Layout "Preço Universal"** — 1 template detecta 3 modos automaticamente: NORMAL (preço único), PROMO (DE/POR + ECONOMIZE + VÁLIDO) e À VISTA (tarja). Espelha o RTM #2012 de etiqueta de preço.
 - ✅ **Editor visual como fonte-da-verdade** — elementos geram o ZPL ao salvar (reflete na impressão): condição por modo (`{% if %}`), wordwrap + espaço entre linhas, negrito (double-strike), fonte/tamanho/alinhamento, imagem/logo e plano de fundo (PNG→`^GF`), barcode dimensionado
 - ✅ **Duplicar layout** — clona pra criar variações sem mexer no original
+- ✅ **3 preços (tabela / promoção / à vista)** — separados por plano de pagamento no Winthor (`PCPRECOPROM.CODPLPAGMAX`); a Impressão Direta mostra os 3 e dois botões pra escolher imprimir **PROMOÇÃO** ou **À VISTA**; produto sem desconto sai no modo **NORMAL**
+- ✅ **Código de barras responsivo** — rasterizado como imagem `^GF` no tamanho exato da caixa (preenche largura×altura, sem os saltos do `^BC` nativo)
+- ✅ **Cores + tarja no editor** — cor de texto/fundo (texto/campo) e cor de linha/fundo (caixa) com paleta; como a térmica é P&B, fundo escuro vira **tarja preta** (`^GB` sólido) + texto branco (`^FR`)
+- ✅ **Ordenação de camadas (z-order)** — botões frente/trás no painel de propriedades; a ordem é salva e respeitada na impressão direta
+- ✅ **Produto de teste no editor** — bipa um produto real (cód/EAN) + filial + modo pra ver o preview com dados reais em vez do mock
+- ✅ **UX**: login com ENTER entre campos (usuário→senha→entrar) · menu lateral colapsável (☰)
 - ⏳ IMP-4 — Integrações com Coleta Avulsa / Inventário + descoberta de impressoras na rede (mDNS + scan TCP)
+- ⏳ Sincronizar vigência da promoção (`PCPRECOPROM.DTFIMVIGENCIA`) pro campo VÁLIDO mostrar a data real de fim
 
 
 

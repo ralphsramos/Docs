@@ -218,9 +218,13 @@ Cache local do `PCEST` por filial.
 | qt_bloqueada | numeric(14,3) | `PCEST.QTBLOQUEADA` |
 | data_ultima_entrada | date | `PCEST.DTULTENT` |
 | data_ultima_saida | date | `PCEST.DTULTSAIDA` |
+| preco_de | numeric(14,2) | tabela / cheio — `PCTABPR.PTABELA` |
+| preco_por | numeric(14,2) | efetivo: COALESCE(promo a prazo → à vista → oferta → PVENDA) |
+| preco_promocional | numeric(14,2) | `PCPRECOPROM.PRECOFIXO` com `CODPLPAGMAX` nulo (promoção a prazo) |
+| preco_avista | numeric(14,2) | `PCPRECOPROM.PRECOFIXO` com `CODPLPAGMAX = 1` (à vista / PIX) |
 | atualizado_em | timestamptz | |
 
-**PK composta:** `(codigo_principal, filial_id)`. `qt_disponivel` é calculado no app: `quantidade - qt_reservada - qt_bloqueada`.
+**PK composta:** `(codigo_principal, filial_id)`. `qt_disponivel` é calculado no app: `quantidade - qt_reservada - qt_bloqueada`. `em_promocao` é derivado em runtime (`preco_por < preco_de`). Preços usados pelo módulo de Impressão (layout de preço com 3 modos) — ver [`impressao.md`](impressao.md).
 
 ### `sync_logs` — **NOVO 0.2.0**
 Histórico de cada sincronização Winthor.
