@@ -85,7 +85,11 @@ preços, fornecedor/departamento e as datas de **alteração de preço** e
 > trocar de filial.
 
 Filtros na própria página:
-- **Busca** por código, EAN ou descrição.
+- **Busca** por código, EAN ou descrição. A busca por **descrição** quebra o
+  texto em **palavras**: cada palavra vira um `ILIKE %palavra%` e **todas**
+  precisam casar (AND), em qualquer ordem e em qualquer um dos três campos
+  (código / EAN / descrição). Ex.: `cadeira vanda` encontra
+  `CADEIRA ESCRITÓRIO VANDA`.
 - **Situação** (chips): todos · só com estoque · só em promoção · só com à vista.
 - **⚙ Filtros** — abre o modal de filtros avançados (abaixo); a engrenagem mostra
   um badge com a quantidade de filtros ativos.

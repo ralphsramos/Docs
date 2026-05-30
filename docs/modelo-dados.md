@@ -28,14 +28,17 @@ usuarios_perfis                      leituras                 coletas_arquivadas
 | **winthor_codfilial** | varchar(2) | **NOVO 0.2.0** — `PCEMPR.CODFILIAL`, sugestão default na UI de vínculo |
 | ativo | bool | default true — se false, admin precisa reativar |
 | ultimo_login | timestamptz | |
+| **senha_hash** | varchar(255) | **NOVO** — hash bcrypt da senha LOCAL. Só preenchido em contas de sistema (login fora do Winthor). Usuários normais = NULL (senha mora no ERP) |
+| **protegido** | bool | **NOVO** — conta imutável (não pode ser editada/desativada/removida nem ter atribuições alteradas). Reservada ao superusuário de sistema |
 | created_at / updated_at | timestamptz | |
 
 ### `perfis`
-| Campo | Tipo |
-|-------|------|
-| id | bigserial PK |
-| nome | varchar(60) UNIQUE |
-| descricao | varchar(255) |
+| Campo | Tipo | Notas |
+|-------|------|-------|
+| id | bigserial PK | |
+| nome | varchar(60) UNIQUE | |
+| descricao | varchar(255) | |
+| **sistema** | bool | **NOVO** — perfil de sistema imutável (não pode ser editado/excluído), re-sincronizado com TODAS as permissões a cada startup |
 
 ### `permissoes`
 | Campo | Tipo | Notas |
@@ -43,17 +46,21 @@ usuarios_perfis                      leituras                 coletas_arquivadas
 | id | bigserial PK | |
 | chave | varchar(80) UNIQUE — ex: `coletas_arquivadas.excluir` | |
 | descricao | varchar(255) | |
-| **area** | varchar(10) | **NOVO 0.3.0** — `web` / `mobile` / `comum` (UI agrupa por área) |
-| **rotulo** | varchar(80) | **NOVO 0.3.0** — nome amigável em pt-BR (fallback: chave) |
+| **area** | varchar(10) | `web` / `mobile` / `impressao` / `comum` (UI agrupa por área) |
+| **rotulo** | varchar(80) | nome amigável em pt-BR (fallback: chave) |
 
-**17 permissões em uso** (release 0.3.0):
+Catálogo cresce a cada release (acesso aos módulos, impressão granular, etc.).
+Principais chaves web:
 
 | Chave | Área | O que libera |
 |-------|------|--------------|
 | `admin.usuarios` | web | Gerir usuários e perfis |
-| `admin.dispositivos` | web | Gerir dispositivos e tokens |
-| `admin.filiais` | web | Gerir filiais |
+| `admin.dispositivos` | web | Gerir dispositivos e tokens (+ acesso ao menu Dispositivos) |
+| `admin.filiais` | web | Gerir filiais (+ acesso ao menu Filiais) |
 | `admin.produtos` | web | Gerir produtos / sincronização |
+| `conferencias.ver` | web | Acesso ao menu Conferências |
+| `separacoes.ver` | web | Acesso ao menu Separações |
+| `produtos.ver` | web | Acesso ao menu Listas de produtos |
 | `admin.coletas_arquivadas` | web | Ver coletas arquivadas (legado — preferir granulares abaixo) |
 | `qa.ver` | web | Painel `/qa` |
 | `coletas_arquivadas.ver` | web | Listar e ver detalhe das coletas arquivadas |
@@ -449,3 +456,9 @@ Em `backend/alembic/versions/`. Ordem cronológica:
 12. `b6e8f0d1a3c9_permissao_area_rotulo` — `permissoes.area` + `permissoes.rotulo` + catálogo expandido (17 chaves)
 13. `c7d3f4e8a6b2_export_templates` — `export_templates` + 3 defaults públicos
 14. `d9e1f5a8c0b3_permissoes_coletas_arquivadas_granular` — quebra `admin.coletas_arquivadas` em `.ver/.exportar/.excluir` (auto-migra perfis existentes)
+
+> Migrations posteriores ao módulo Impressão (etiquetas, 3 preços, filtros 2012,
+> log de origem) seguem na pasta `versions/`. As mais recentes ligadas a
+> **acesso & segurança**:
+> - `b2e8d4c1f7a9_conta_de_sistema_systems` — `usuarios.senha_hash` + `usuarios.protegido` + `perfis.sistema` (suporte à conta de sistema imutável; o usuário/perfil em si são criados pelo seed de startup, não pela migration)
+> - `c3f1a9d24e8b_perms_acesso_modulos` — permissões de acesso `conferencias.ver` / `separacoes.ver` / `produtos.ver` (concedidas ao perfil admin; o perfil de sistema recebe no próximo boot)

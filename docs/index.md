@@ -23,7 +23,7 @@ precisa.
 
 ## Segurança & operação
 
-- [`permissoes-e-filiais.md`](permissoes-e-filiais.md) — 3 camadas de controle (perfil + filial + permissão), fluxos do dia a dia
+- [`permissoes-e-filiais.md`](permissoes-e-filiais.md) — 3 camadas de controle (perfil + filial + permissão), permissões de acesso aos módulos, conta de sistema "systems", logout que limpa a sessão, fluxos do dia a dia
 - [`qa.md`](qa.md) — Como rodar testes, ler logs, testar login
 
 ## Dev
@@ -41,11 +41,12 @@ precisa.
 
 ## 🌐 Repo público de docs
 
-Este `docs/`, mais `ROADMAP.md`/`CHANGELOG.md`/`README.md` é **espelhado** em
-[github.com/ralphsramos/Docs](https://github.com/ralphsramos/Docs) (público).
-O sync acontece via `scripts/sync_docs.bat` — roda manualmente após mudanças
-importantes ou via hook pos-commit. O menu lateral do app aponta pra esse
-mirror público (não pro repo privado do projeto).
+Só este `docs/` + o `ROADMAP.md` são **espelhados** no repo público
+[github.com/ralphsramos/Docs](https://github.com/ralphsramos/Docs). O
+`CHANGELOG.md` e o `README.md` **ficam de fora** (contêm dados internos). O sync
+acontece via `scripts/sync_docs.bat` — roda manualmente após mudanças
+importantes. O menu lateral do app aponta pra esse mirror público (não pro repo
+privado do projeto).
 
 Setup uma vez:
 ```bash

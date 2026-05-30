@@ -207,6 +207,26 @@ Módulo novo pra impressão de etiquetas térmicas (ARGOX / ZEBRA / ELGIN).
 - ⏳ Impressão de etiquetas de áreas (QR/barcode)
 - ⏳ Produtividade em tempo real (itens/h por operador)
 
+## 0.5.0 — Segurança, Acesso & refinos ✅
+
+### Conta de sistema & blindagem de acesso ✅
+- ✅ **Superusuário "systems"** — perfil de sistema imutável com **todas** as permissões, re-sincronizado a cada startup (permissão nova de migration futura é concedida automaticamente no próximo boot)
+- ✅ **Login local** (bcrypt) fora do Winthor — funciona mesmo com o ERP fora do ar; senha mora só no `.env` (hash no banco, nunca em texto no código)
+- ✅ **Imutabilidade** — perfil/usuário de sistema não pode ser editado, excluído, desativado nem ter atribuições alteradas (403 na API + cadeado na UI)
+- ✅ **Admin não se tranca pra fora** — bloqueia remover a própria última atribuição de admin
+- ✅ Migração de hashing `passlib` → `bcrypt` nativo (compatível com bcrypt 5)
+
+### Permissões de acesso aos módulos ✅
+- ✅ Conferências / Separações / Listas de produtos ganharam permissões de acesso próprias (`conferencias.ver` / `separacoes.ver` / `produtos.ver`); Dispositivos / Filiais passam a usar `admin.dispositivos` / `admin.filiais`
+- ✅ Menu (web + mobile) só mostra o módulo pra quem tem a permissão; itens aparecem no editor de perfis pra conceder/tirar
+- ✅ **Logout limpa a sessão** (cache do React Query + `localStorage` `c2001:*`, exceto config do servidor) — próximo login na mesma máquina não herda acesso/dados
+
+### Impressão — refinos ✅
+- ✅ Busca por **descrição palavra a palavra** (cada palavra vira `ILIKE %palavra%` com AND, em qualquer ordem; código/EAN/descrição)
+- ✅ Filtro de promoção respeitado + tag "Período exato"
+- ✅ Log de etiquetas com origem (web/mobile) + equipamento/PC
+- ✅ Aba Coletas mostra só lista + quantidade (detalhe técnico vai pro Log geral)
+
 ## 0.6.0 — Módulo Conferência ⏳
 
 - ⏳ Carga on-demand de pedido (`PCPEDC`/`PCPEDI`) ou XML de NF (`PCNFENT`)
