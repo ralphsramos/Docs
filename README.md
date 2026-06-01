@@ -32,7 +32,8 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v11`](../../releases/tag/app-v11) | apk | **App 0.5.6** (code 11) — ⭐ atual. Correção da permissão de câmera (request-first) + erro detalhado. Câmera in-app (2 modos), Etiquetas com dados do produto. |
+| [`app-v12`](../../releases/tag/app-v12) | apk | **App 0.5.7** (code 12) — ⭐ atual. Impressão direta pelo celular: seletor Servidor / Rede (TCP) / Bluetooth na tela de Etiquetas. |
+| [`app-v11`](../../releases/tag/app-v11) | apk | **App 0.5.6** (code 11) — fix permissão câmera + câmera in-app (2 modos) + Etiquetas com dados. _(substituída)_ |
 | [`app-v10`](../../releases/tag/app-v10) | apk | **App 0.5.5** (code 10) — câmera robusta + etiquetas com dados. _(substituída)_ |
 | [`app-v9`](../../releases/tag/app-v9) | apk | **App 0.5.4** (code 9) — etiquetas fix + 1ª versão da câmera. _(substituída)_ |
 | [`app-v8`](../../releases/tag/app-v8) | apk | **App 0.5.3** (code 8) — device usa URL da LAN; safe-area; Enter no login. _(substituída)_ |
