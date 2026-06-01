@@ -32,10 +32,11 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v8`](../../releases/tag/app-v8) | apk | **App 0.5.3** (code 8) — ⭐ atual. Correção crítica: chamadas de device usam a URL da LAN (corrige app preso em "sem filial"); safe-area no topo; Enter avança no login. |
-| [`app-v7`](../../releases/tag/app-v7) | apk | **App 0.5.2** (code 7) — app nativo abre direto no fluxo de coletor. _(substituída)_ |
-| [`app-v6`](../../releases/tag/app-v6) | apk | **App 0.5.1** (code 6) — habilita HTTP cleartext. _(substituída)_ |
-| [`app-v5`](../../releases/tag/app-v5) | apk | **App 0.5.0** (code 5) — base de versionamento/OTA. _(substituída)_ |
+| [`app-v9`](../../releases/tag/app-v9) | apk | **App 0.5.4** (code 9) — ⭐ atual. Etiquetas: corrige erro ao carregar impressoras/layouts. Leitura por **câmera** do celular (botão 📷) em Coletas/Etiquetas/Inventário. |
+| [`app-v8`](../../releases/tag/app-v8) | apk | **App 0.5.3** (code 8) — device usa URL da LAN (corrige "sem filial"); safe-area; Enter no login. _(substituída)_ |
+| [`app-v7`](../../releases/tag/app-v7) | apk | **App 0.5.2** (code 7) — app nativo abre no fluxo de coletor. _(substituída)_ |
+| [`app-v6`](../../releases/tag/app-v6) | apk | **App 0.5.1** (code 6) — HTTP cleartext. _(substituída)_ |
+| [`app-v5`](../../releases/tag/app-v5) | apk | **App 0.5.0** (code 5) — base OTA. _(substituída)_ |
 
 O fluxo completo está em [`docs/app-versionamento.md`](docs/app-versionamento.md).
 
