@@ -32,7 +32,8 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v10`](../../releases/tag/app-v10) | apk | **App 0.5.5** (code 10) — ⭐ atual. Câmera robusta (in-app, 2 modos: avulso e contínuo) sem depender do Google; Etiquetas mostra descrição+preço do produto ao bipar. |
+| [`app-v11`](../../releases/tag/app-v11) | apk | **App 0.5.6** (code 11) — ⭐ atual. Correção da permissão de câmera (request-first) + erro detalhado. Câmera in-app (2 modos), Etiquetas com dados do produto. |
+| [`app-v10`](../../releases/tag/app-v10) | apk | **App 0.5.5** (code 10) — câmera robusta + etiquetas com dados. _(substituída)_ |
 | [`app-v9`](../../releases/tag/app-v9) | apk | **App 0.5.4** (code 9) — etiquetas fix + 1ª versão da câmera. _(substituída)_ |
 | [`app-v8`](../../releases/tag/app-v8) | apk | **App 0.5.3** (code 8) — device usa URL da LAN; safe-area; Enter no login. _(substituída)_ |
 | [`app-v7`](../../releases/tag/app-v7) | apk | **App 0.5.2** (code 7) — abre no fluxo de coletor. _(substituída)_ |
