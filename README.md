@@ -32,8 +32,9 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v6`](../../releases/tag/app-v6) | apk | **App 0.5.1** (code 6) — ⭐ atual. Correção: habilita HTTP cleartext + mixed content para o app falar com o backend HTTP da LAN (corrige "Network Error" no TESTAR CONEXÃO). |
-| [`app-v5`](../../releases/tag/app-v5) | apk | **App 0.5.0** (code 5) — base de versionamento/OTA: controle de versão por dispositivo, dashboard de frota e atualização pela rede. _(substituída pela 0.5.1)_ |
+| [`app-v7`](../../releases/tag/app-v7) | apk | **App 0.5.2** (code 7) — ⭐ atual. App nativo abre direto no fluxo de coletor (token → login do operador → menu), em tela cheia, sem o painel admin. |
+| [`app-v6`](../../releases/tag/app-v6) | apk | **App 0.5.1** (code 6) — habilita HTTP cleartext p/ falar com o backend HTTP da LAN. _(substituída pela 0.5.2)_ |
+| [`app-v5`](../../releases/tag/app-v5) | apk | **App 0.5.0** (code 5) — base de versionamento/OTA. _(substituída)_ |
 
 O fluxo completo está em [`docs/app-versionamento.md`](docs/app-versionamento.md).
 
