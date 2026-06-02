@@ -32,7 +32,9 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v21`](../../releases/tag/app-v21) | apk | **App 0.6.6** (code 21) — ⭐ atual. **Câmera nova**: leitor pela câmera do navegador (`getUserMedia`) + decodificação em JavaScript (ZXing) — **sem Google Play Services nem MLKit**. Mostra o vídeo ao vivo com a mira e, se falhar, exibe o motivo. |
+| [`app-v23`](../../releases/tag/app-v23) | apk | **App 0.6.8** (code 23) — ⭐ atual. **Bluetooth refeito**: plugin SPP próprio em Java (o de terceiro não tinha código Android). Lista as pareadas e imprime na térmica (ex.: K329) por Bluetooth. |
+| [`app-v22`](../../releases/tag/app-v22) | apk | **App 0.6.7** (code 22) — câmera reposicionada (campo de cópias visível) + SINCRONIZAR não trava mais. _(substituída)_ |
+| [`app-v21`](../../releases/tag/app-v21) | apk | **App 0.6.6** (code 21) — câmera via `getUserMedia` + ZXing (sem Play Services/MLKit). _(substituída)_ |
 | [`app-v20`](../../releases/tag/app-v20) | apk | **App 0.6.5** (code 20) — diagnóstico remoto automático + Bluetooth com timeout (botão Procurar não trava mais). _(substituída)_ |
 | [`app-v19`](../../releases/tag/app-v19) | apk | **App 0.6.4** (code 19) — fix crítico: timeout nas chamadas do leitor MLKit (sync e câmera não penduram mais em aparelho sem Play Services). _(substituída)_ |
 | [`app-v18`](../../releases/tag/app-v18) | apk | **App 0.6.3** (code 18) — tela de login bloqueada ganhou o botão **ATUALIZAR AGORA** (update 1-toque). _(substituída)_ |
