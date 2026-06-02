@@ -32,14 +32,16 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v12`](../../releases/tag/app-v12) | apk | **App 0.5.7** (code 12) — ⭐ atual. Impressão direta pelo celular: seletor Servidor / Rede (TCP) / Bluetooth na tela de Etiquetas. |
-| [`app-v11`](../../releases/tag/app-v11) | apk | **App 0.5.6** (code 11) — fix permissão câmera + câmera in-app (2 modos) + Etiquetas com dados. _(substituída)_ |
-| [`app-v10`](../../releases/tag/app-v10) | apk | **App 0.5.5** (code 10) — câmera robusta + etiquetas com dados. _(substituída)_ |
-| [`app-v9`](../../releases/tag/app-v9) | apk | **App 0.5.4** (code 9) — etiquetas fix + 1ª versão da câmera. _(substituída)_ |
+| [`app-v18`](../../releases/tag/app-v18) | apk | **App 0.6.3** (code 18) — ⭐ atual. A tela de login bloqueada (update obrigatório) ganhou o botão **ATUALIZAR AGORA** — 1 toque baixa a nova versão e abre o instalador. |
+| [`app-v17`](../../releases/tag/app-v17) | apk | **App 0.6.2** (code 17) — monitoramento remoto: o app envia seus **logs por dispositivo** a cada sincronismo (aba "Logs do app" em Dispositivos). _(substituída)_ |
+| [`app-v16`](../../releases/tag/app-v16) | apk | **App 0.6.1** (code 16) — impressora Bluetooth com permissão em tempo de execução (plugin novo). _(substituída)_ |
+| [`app-v15`](../../releases/tag/app-v15) | apk | **App 0.6.0** (code 15) — tema alinhado ao web + câmera híbrida (nativa + fallback) + login sempre ao deslogar. _(substituída)_ |
+| [`app-v12`](../../releases/tag/app-v12) | apk | **App 0.5.7** (code 12) — impressão direta pelo celular: Servidor / Rede (TCP) / Bluetooth. _(substituída)_ |
 | [`app-v8`](../../releases/tag/app-v8) | apk | **App 0.5.3** (code 8) — device usa URL da LAN; safe-area; Enter no login. _(substituída)_ |
-| [`app-v7`](../../releases/tag/app-v7) | apk | **App 0.5.2** (code 7) — abre no fluxo de coletor. _(substituída)_ |
-| [`app-v6`](../../releases/tag/app-v6) | apk | **App 0.5.1** (code 6) — HTTP cleartext. _(substituída)_ |
 | [`app-v5`](../../releases/tag/app-v5) | apk | **App 0.5.0** (code 5) — base OTA. _(substituída)_ |
+
+> Versões intermediárias (codes 9–11, 13) foram etapas de teste e seguem
+> acessíveis em [Releases](../../releases), mas saíram da tabela pra não poluir.
 
 O fluxo completo está em [`docs/app-versionamento.md`](docs/app-versionamento.md).
 
