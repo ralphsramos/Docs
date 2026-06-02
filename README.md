@@ -6,7 +6,19 @@
 
 
 
+
+
+
+
+
+
+
+
 Repositório **público** de apoio ao app **Coletor 2001** — o sistema de coleta
+
+
+
+
 
 
 
@@ -18,11 +30,31 @@ de dados dos coletores das Lojas 2001, integrado ao Winthor.
 
 
 
+
+
+
+
+
+
+
+
 O código-fonte vive no repositório **privado** `Coletor_2001`. Aqui fica só o que
 
 
 
+
+
+
+
 precisa ser **público**: a documentação publicável e os **releases do app**.
+
+
+
+
+
+
+
+
 
 
 
@@ -38,7 +70,19 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
+
+
+
+
 | Caminho | O que é |
+
+
+
+
 
 
 
@@ -46,7 +90,15 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
 | **[Releases](../../releases)** | Versões do app distribuídas como **APK** (asset baixável). Espelho/fallback do OTA — ver abaixo. |
+
+
+
+
 
 
 
@@ -54,7 +106,19 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
 | [`ROADMAP.md`](ROADMAP.md) | Planejamento e evolução do projeto, versão a versão. |
+
+
+
+
+
+
+
+
 
 
 
@@ -70,7 +134,19 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
+
+
+
+
 - [`docs/index.md`](docs/index.md) — porta de entrada da documentação.
+
+
+
+
 
 
 
@@ -78,7 +154,15 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
 - [`docs/arquitetura.md`](docs/arquitetura.md) — arquitetura (backend / web / mobile).
+
+
+
+
 
 
 
@@ -86,11 +170,27 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
 - [`docs/mobile-android.md`](docs/mobile-android.md) — o app Android nos coletores.
 
 
 
+
+
+
+
 - [`docs/permissoes-e-filiais.md`](docs/permissoes-e-filiais.md) · [`docs/acesso-via-rede.md`](docs/acesso-via-rede.md) — acesso, permissões e rede.
+
+
+
+
+
+
+
+
 
 
 
@@ -106,7 +206,19 @@ precisa ser **público**: a documentação publicável e os **releases do app**.
 
 
 
+
+
+
+
+
+
+
+
 Os coletores se atualizam preferencialmente pelo **servidor na LAN** (rápido e
+
+
+
+
 
 
 
@@ -114,7 +226,15 @@ privado). Quando estão **fora da rede**, caem para o **APK público** publicado
 
 
 
+
+
+
+
 aqui em Releases — é o link que vai no campo `url_publica` de cada versão, no
+
+
+
+
 
 
 
@@ -126,7 +246,19 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
+
+
+
+
 | Versão | Tipo | Conteúdo |
+
+
+
+
 
 
 
@@ -134,10 +266,22 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
-| [`app-v25`](../../releases/tag/app-v25) | apk | **App 0.6.10** (code 25) — ⭐ atual. Bluetooth nativo (K329) + layout corrigido nas 3 telas de bipe (Etiquetas, Coletas, Inventário). |
+
+
+
+
+| [`app-v26`](../../releases/tag/app-v26) | apk | **App 0.6.11** (code 26) — ⭐ atual. **Atualização sem Chrome**: o app baixa o APK dentro dele e abre o instalador direto (acaba o download travado). + Bluetooth nativo + layouts. |
+| [`app-v25`](../../releases/tag/app-v25) | apk | **App 0.6.10** (code 25) — Bluetooth nativo + layout das 3 telas de bipe. _(substituída)_ |
+
 | [`app-v24`](../../releases/tag/app-v24) | apk | **App 0.6.9** (code 24) — Bluetooth nativo + posição da câmera em Coletas. _(substituída)_ |
 
+
+
 | [`app-v23`](../../releases/tag/app-v23) | apk | **App 0.6.8** (code 23) — Bluetooth refeito (plugin SPP próprio em Java). _(substituída)_ |
+
+
+
+
 
 
 
@@ -145,7 +289,15 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
 | [`app-v21`](../../releases/tag/app-v21) | apk | **App 0.6.6** (code 21) — câmera via `getUserMedia` + ZXing (sem Play Services/MLKit). _(substituída)_ |
+
+
+
+
 
 
 
@@ -153,7 +305,15 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
 | [`app-v19`](../../releases/tag/app-v19) | apk | **App 0.6.4** (code 19) — fix crítico: timeout nas chamadas do leitor MLKit (sync e câmera não penduram mais em aparelho sem Play Services). _(substituída)_ |
+
+
+
+
 
 
 
@@ -161,7 +321,15 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
 | [`app-v17`](../../releases/tag/app-v17) | apk | **App 0.6.2** (code 17) — monitoramento remoto: o app envia seus **logs por dispositivo** a cada sincronismo (aba "Logs do app" em Dispositivos). _(substituída)_ |
+
+
+
+
 
 
 
@@ -169,7 +337,15 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
 | [`app-v15`](../../releases/tag/app-v15) | apk | **App 0.6.0** (code 15) — tema alinhado ao web + câmera híbrida (nativa + fallback) + login sempre ao deslogar. _(substituída)_ |
+
+
+
+
 
 
 
@@ -177,7 +353,15 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
 | [`app-v8`](../../releases/tag/app-v8) | apk | **App 0.5.3** (code 8) — device usa URL da LAN; safe-area; Enter no login. _(substituída)_ |
+
+
+
+
 
 
 
@@ -189,11 +373,31 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 
 
+
+
+
+
+
+
+
+
 > Versões intermediárias (codes 9–11, 13) foram etapas de teste e seguem
 
 
 
+
+
+
+
 > acessíveis em [Releases](../../releases), mas saíram da tabela pra não poluir.
+
+
+
+
+
+
+
+
 
 
 
@@ -209,7 +413,19 @@ O fluxo completo está em [`docs/app-versionamento.md`](docs/app-versionamento.m
 
 
 
+
+
+
+
+
+
+
+
 > 🔒 **Segurança:** todos os APKs são assinados com a **mesma** chave de release.
+
+
+
+
 
 
 
@@ -217,7 +433,15 @@ O fluxo completo está em [`docs/app-versionamento.md`](docs/app-versionamento.m
 
 
 
+
+
+
+
 > rede, e confira o **SHA-256** publicado em cada Release antes de instalar.
+
+
+
+
 
 
 
