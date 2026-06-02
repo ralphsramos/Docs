@@ -32,7 +32,8 @@ painel admin. O app valida o **SHA-256** antes de aplicar a atualização.
 
 | Versão | Tipo | Conteúdo |
 |---|---|---|
-| [`app-v19`](../../releases/tag/app-v19) | apk | **App 0.6.4** (code 19) — ⭐ atual. Correção crítica: em aparelhos sem Google Play Services o leitor MLKit pendurava, travando o SINCRONIZAR e a câmera. Agora toda chamada do plugin tem timeout e a câmera usa o leitor in-app (modelo embutido, sem Play Services). |
+| [`app-v20`](../../releases/tag/app-v20) | apk | **App 0.6.5** (code 20) — ⭐ atual. Diagnóstico remoto automático (logs sobem sozinhos após cada uso da câmera/impressora, sem sync manual) + Bluetooth com timeout (botão Procurar não trava mais) + diagnóstico de BT nos logs. |
+| [`app-v19`](../../releases/tag/app-v19) | apk | **App 0.6.4** (code 19) — fix crítico: timeout nas chamadas do leitor MLKit (sync e câmera não penduram mais em aparelho sem Play Services). _(substituída)_ |
 | [`app-v18`](../../releases/tag/app-v18) | apk | **App 0.6.3** (code 18) — tela de login bloqueada ganhou o botão **ATUALIZAR AGORA** (update 1-toque). _(substituída)_ |
 | [`app-v17`](../../releases/tag/app-v17) | apk | **App 0.6.2** (code 17) — monitoramento remoto: o app envia seus **logs por dispositivo** a cada sincronismo (aba "Logs do app" em Dispositivos). _(substituída)_ |
 | [`app-v16`](../../releases/tag/app-v16) | apk | **App 0.6.1** (code 16) — impressora Bluetooth com permissão em tempo de execução (plugin novo). _(substituída)_ |
