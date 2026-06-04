@@ -24,6 +24,7 @@ precisa.
 
 ## Segurança & operação
 
+- [`seguranca.md`](seguranca.md) — **Modelo de segurança** (camadas de defesa, autenticação, autorização, boas práticas), checklist de configuração segura e a suíte automatizada de testes de segurança
 - [`permissoes-e-filiais.md`](permissoes-e-filiais.md) — 3 camadas de controle (perfil + filial + permissão), permissões de acesso aos módulos, conta de sistema "systems", logout que limpa a sessão, fluxos do dia a dia
 - [`qa.md`](qa.md) — Como rodar testes, ler logs, testar login
 

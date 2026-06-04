@@ -238,6 +238,29 @@ Módulo novo pra impressão de etiquetas térmicas (ARGOX / ZEBRA / ELGIN).
 - ✅ Filtro de promoção respeitado + tag "Período exato"
 - ✅ Log de etiquetas com origem (web/mobile) + equipamento/PC
 - ✅ Aba Coletas mostra só lista + quantidade (detalhe técnico vai pro Log geral)
+- ✅ **Busca inteligente** na Lista de produtos: número ≤6 díg → CODPROD exato; ≥7 → CODAUXILIAR/EAN exato; texto → ILIKE por palavra
+- ✅ **Imprimir nesta máquina** (navegador) — 1:1 com o preview (`@page` + `object-fit: fill`); modo imagem universal (driver Windows) + gerador PPLA bitmap (Argox)
+- ✅ **1 linha por embalagem** na Lista (preço = unitário × qtunit, imprime o EAN da embalagem)
+- ✅ **Preço a imprimir por produto** (clicar Tabela/Promoção/À vista) + **promoções múltiplas** (tabela `promocoes_filial`, seletor de campanha por produto)
+- ✅ **Aba Coletas v2** — lista só as coletas SALVAS pra imprimir depois + carrega ao Buscar + filtros filial/data/usuário
+- ✅ **Designer.md** — design system (paleta, tipografia, iconografia, componentes web+mobile)
+
+### Controle de acesso & Central de ajuda por módulo 🔄
+- ✅ **Cobertura de permissão backend ↔ menu** — GETs de produtos exigem `produtos.ver`; Coletas avulsas ganhou `coletas_avulsas.ver`; menu web (Coletas avulsas/Inventários/Auditoria/Docs) gateado
+- ✅ **Gate do app no backend** — `require_device_permission(...)` valida a permissão do operador nos endpoints `device` (leituras/arquivar/inventário/impressão)
+- ⏳ **Guard de rota no front** (`<RequirePerm>`) — mostrar "sem acesso" em vez de página vazia
+- ⏳ **Central de ajuda por módulo** no Docs — 1 página por módulo/aba (o que faz + **qual perfil acessa**), alinhada ao catálogo de permissões e linkada na própria tela
+
+### Hardening de segurança 🔄
+- ✅ **Auditoria ampla** (backend/web/mobile) + **QA automatizada** de acesso (`backend/tests/test_seg_*`) + **`docs/seguranca.md`**
+- ✅ **Error Boundary** global no web (fim da tela branca em erro de render) + `refetchOnWindowFocus:false`
+- ✅ **Home gateado por permissão** — atalho Listas de Produtos por `produtos.ver`; cards Docs/Roadmap por `docs.ver`; Dica só admin
+- ✅ **baseURL travada** (allowlist de rede local) — a credencial do dispositivo só vai pra rede confiável
+- ✅ **OTA seguro** — APK/bundle só por **HTTPS** de origem pública + **sha256 obrigatório** conferido antes de instalar
+- ✅ **Offline em IndexedDB** + limpeza do offline no logout do coletor (fim do estouro silencioso do `localStorage`)
+- ✅ **Anti-vazamento** — credenciais redigidas nos logs do app + headers de segurança no backend
+- ✅ **Scanner** — foco contínuo + formatos do varejo/QR + lanterna (torch) na leitura por câmera
+- ⏳ **Endurecimento contínuo** — reforço de escopo por filial nas rotas, limites de tentativa de autenticação e política de origens; itens e prioridades no controle interno de segurança
 
 ## 0.6.0 — Módulo Conferência ⏳
 

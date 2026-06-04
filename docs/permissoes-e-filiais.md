@@ -146,6 +146,8 @@ Cada permissão tem uma **área** (`web` / `mobile` / `impressao` / `comum`) que
 | `conferencias.ver` | **Acesso ao menu Conferências** |
 | `separacoes.ver` | **Acesso ao menu Separações** |
 | `produtos.ver` | **Acesso ao menu Listas de produtos** |
+| `coletas_avulsas.ver` | **Acesso ao menu Coletas avulsas** (concedida a quem já coletava ou é admin) |
+| `docs.ver` | **Mostra o link Docs no menu** (documentação do projeto) |
 | `qa.ver` | Acessar `/qa` (logs de erro, métricas) |
 | `coletas_arquivadas.ver` | Listar e ver detalhe das coletas arquivadas |
 | `coletas_arquivadas.exportar` | Baixar TXT/Excel/PDF de coletas |
@@ -156,10 +158,12 @@ Cada permissão tem uma **área** (`web` / `mobile` / `impressao` / `comum`) que
 > **Acesso aos módulos do menu.** Antes, Conferências, Separações, Listas de
 > produtos, Dispositivos e Filiais apareciam no menu de **qualquer** perfil, sem
 > como conceder/tirar. Agora cada um exige sua permissão de acesso
-> (`conferencias.ver`, `separacoes.ver`, `produtos.ver`, `admin.dispositivos`,
-> `admin.filiais`) — o item só aparece no menu pra quem a tiver, e ela aparece no
-> editor de perfis pra ser marcada. (A listagem de filiais via API segue aberta a
-> qualquer perfil, pois alimenta os seletores espalhados pelo app.)
+> (`conferencias.ver`, `separacoes.ver`, `produtos.ver`, `coletas_avulsas.ver`,
+> `inventarios.ver`, `auditoria.ver`, `admin.dispositivos`, `admin.filiais`, e
+> `docs.ver` pro link Docs) — o item só aparece no menu pra quem a tiver, e ela
+> aparece no editor de perfis pra ser marcada. Os GETs dessas páginas no backend
+> também exigem a permissão (não basta esconder o menu). (A listagem de filiais
+> via API segue aberta a qualquer perfil, pois alimenta os seletores do app.)
 
 ### 📱 Mobile (app coletor — 9 chaves)
 
@@ -183,7 +187,8 @@ Cada permissão tem uma **área** (`web` / `mobile` / `impressao` / `comum`) que
 | `impressao.ver` | **Guarda-chuva**: vê todas as abas (read-only) |
 | `impressao.imprimir` | Mobile dispara impressão (`POST /device/impressao/imprimir`) |
 | `impressao.direta.usar` | Aba ⚡ Direta (admin web) — bipa + imprime na hora |
-| `impressao.coletas.ver` | Aba 📋 Coletas (rastreabilidade + drawer + reimprimir) |
+| `impressao.lista.ver` | Aba 📋 Lista de produtos (impressão em lote: busca, embalagens, preço por produto, promoções) |
+| `impressao.coletas.ver` | Aba 📋 Coletas (só as coletas salvas pra imprimir depois) |
 | `impressao.layouts.ver` | Aba 🏷️ Layouts (visualizar templates) |
 | `impressao.impressoras.ver` | Aba 🖨️ Impressoras (visualizar hardware + testar conexão) |
 | `impressao.log.ver` | Aba 📜 Log (auditoria denso + download TXT) |

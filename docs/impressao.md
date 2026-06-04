@@ -12,6 +12,20 @@ auditoria.
 
 ---
 
+## Novidades (2026-06)
+
+A aba **Lista de produtos** (impressão em lote) ganhou:
+- **Busca inteligente** — número ≤6 díg = CODPROD exato · ≥7 díg = CODAUXILIAR/EAN exato (principal ou de embalagem) · texto = `ILIKE %palavra%` por palavra (sem falso-positivo de substring).
+- **1 linha por embalagem** — produto com 2+ embalagens (UN/CX/FARDO) expande no grid; cada linha imprime com **seu EAN** e **preço = unitário × qtunit**.
+- **Preço a imprimir por produto** — clicar na coluna **Tabela / Promoção / À vista** escolhe o que sai naquele produto (sobrepõe o "Preço a imprimir" global).
+- **Promoções múltiplas** — produto com 2+ campanhas do mesmo tipo vira um **seletor** (tabela `promocoes_filial`, migration `c1f9a4b7e602`; sincroniza TODAS as campanhas ativas do PCPRECOPROM).
+
+**Imprimir nesta máquina** (navegador): manda o **mesmo PNG do preview** numa página `@page { size: LxA mm; margin: 0 }` com `object-fit: fill` → impressão **1:1** com o preview (driver no tamanho da etiqueta · margens nenhuma · escala 100%). Modo imagem universal (driver Windows) + gerador PPLA bitmap (Argox) pra impressoras não-ZPL.
+
+A aba **Coletas** passou a mostrar **só as coletas salvas pra imprimir depois** (carrega ao **Buscar**; filtros filial/data/usuário) — o histórico de impressão imediata fica no **Log**.
+
+---
+
 ## 1. Decisões de arquitetura
 
 | Decisão | Tech | Justificativa |
@@ -46,7 +60,8 @@ promocional + à vista separados por plano de pagamento).
 | `impressao.ver`               | **Guarda-chuva** — vê todas as abas |
 | `impressao.imprimir`          | Mobile dispara impressão |
 | `impressao.direta.usar`       | Aba ⚡ Direta (admin web) |
-| `impressao.coletas.ver`       | Aba 📋 Coletas (rastreabilidade) |
+| `impressao.lista.ver`         | Aba 📋 Lista de produtos (impressão em lote) |
+| `impressao.coletas.ver`       | Aba 📋 Coletas (coletas salvas pra imprimir depois) |
 | `impressao.layouts.ver`       | Aba 🏷️ Layouts (visualizar) |
 | `impressao.impressoras.ver`   | Aba 🖨️ Impressoras (visualizar) |
 | `impressao.log.ver`           | Aba 📜 Log (auditoria) |
